@@ -27,10 +27,22 @@
   (+ 120
 	 (* (/ 15 .10) (- 5.00 ticket-price))))
 
+; improved-profit: Number -> Number
+;
+
+(define (improved-profit ticket-price)
+ (- (revenue ticket-price)
+	(improved-cost ticket-price)))
+
+; improved-cost: Number -> Number
+; 
+(define (improved-cost ticket-price)
+  (* 1.50 (attendees ticket-price)))
+
+
 (define 3.1.1-tests
   (test-suite
 	"Test for 3.1.1"
-
 	(test-case
 	  "attendees"
 	  (check-equal? (attendees 3.00) 420.0)
@@ -57,4 +69,24 @@
 	  )
 	)
   )
+
+(define 3.1.4-tests
+  (test-suite
+	"Test for 3.1.4"
+	(test-case
+	  "improved-cost"
+	  (check-equal? (improved-cost 3.00) 630.0)
+	  (check-equal? (improved-cost 4.00) 405.0)
+	  (check-equal? (improved-cost 5.00) 180.0)
+	  )
+	(test-case
+	  "profit"
+	  (check-equal? (improved-profit 3.00) 630.0)
+	  (check-equal? (improved-profit 4.00) 675.0)
+	  (check-equal? (improved-profit 5.00) 420.0)
+	  )
+	)
+  )
 (run-tests 3.1.1-tests)
+(run-tests 3.1.4-tests)
+
